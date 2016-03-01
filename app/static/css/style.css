@@ -52,14 +52,20 @@ h2 {
     font-style: normal;
     color: #777;
 }
-#sketch_description {
+/*#sketch_description {
     background-color: #efefef;
-}
+}*/
 #sketch_filename_panel {
     border-top: 1px solid #ddd;
     border-right: 1px solid #ddd;
     padding: 10px;
     background-color: #eee;
+}
+#sketch_description_panel {
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 10px;
+    background-color: #eee;   
 }
 #container_bottom {
     margin-bottom: 10px;

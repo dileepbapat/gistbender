@@ -17,17 +17,20 @@
     </div>
     <div id="container_top" class="row">
         <div class="col-sm-12 col-md-12">
-            <div class="row">
-            {% if description %}
-            <div id="description_body">
-                {% if filename %}
-                <span id="description_filename">{{ filename }}:</span>
+            <div id="sketch_description_panel" class="row">
+                {% if description %}
+                <input id="sketch_description" type="text" placeholder="{{ description }}" class="form-control">
+                {% else %}
+                <input id="sketch_description" type="text" placeholder="Full Name" class="form-control">
                 {% endif %}
-                {{ description }}
             </div>
-            {% else %}
-            <input id="sketch_description" type="text" placeholder="Sketch description..." class="form-control">
-            {% endif %}
+
+            <div id="sketch_filename_panel" class="row">
+                {% if filename %}
+                <input id="sketch_filename" type="text" placeholder="{{ filename }}" class="form-control">
+                {% else %}
+                <input id="sketch_filename" type="text" placeholder="Email" class="form-control">
+                {% endif %}
             </div>
         </div>
     </div>
@@ -36,25 +39,6 @@
             <div class="row">
                 <div class="col-sm-3 col-md-3" id="controls">
                     <ul class="nav nav-sidebar">
-                        <li><select id="cb_cf_boards"></select></li>
-                        <li><button class="btn btn-success" id="cb_cf_verify_btn" disabled="disabled">
-                          <i class="glyphicon glyphicon-ok"></i> Verify Code
-                        </button></li>
-                        <li><select id="cb_cf_ports" class="dropdown-select"></select></li>
-                        <li><button class="btn btn-success" id="cb_cf_flash_btn" disabled="disabled">
-                          <i class="glyphicon glyphicon-arrow-right"></i> Run on Arduino
-                        </button></li>
-                        <li><select id="cb_cf_programmers"> </select></li>
-                        <li><button class="btn btn-default" id="cb_cf_flash_with_prog_btn" disabled="disabled">
-                        <i class="glyphicon glyphicon-upload"></i> Flash w/ Programmer
-                        </button></li>
-                        <li><span id="#speed_label">Speed:</span></li> 
-                        <li><select id="cb_cf_baud_rates"></select></li>
-                        <li><button class="btn btn-default" id="cb_cf_serial_monitor_connect">
-                            <i class="glyphicon glyphicon-list-alt"></i> Connect
-                        </button></li>
-                        <li><div id="cb_cf_serial_monitor"></div></li>
-                        <br>
                         <li><button class="btn btn-success" id="share_sketch">
                             <i class="glyphicon glyphicon-send"></i> Share Sketch
                         </button></li>
@@ -62,13 +46,6 @@
                     </ul>
                 </div>
                 <div class="col-sm-9 col-md-9">
-                    <div id="sketch_filename_panel" class="row">
-                        {% if filename %}
-                        <input id="sketch_filename" type="text" placeholder="{{ filename }}" class="form-control">
-                        {% else %}
-                        <input id="sketch_filename" type="text" placeholder="Sketch filename..." class="form-control">
-                        {% endif %}
-                    </div>
                     <div class="row">
                         {% if code %}
                         <pre id="editor">{{ code }}</pre>
