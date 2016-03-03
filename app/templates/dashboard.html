@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head>
+<title>Dashboard</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/style.css">
+<link href='https://fonts.googleapis.com/css?family=Fira+Sans:400,400italic,500,700|Patua+One|Droid+Sans' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div id="wrapper" class="container">
+    <div class="navbar navbar-fixed-top navbar-default">
+        <div class="container">
+            <!--<a class="navbar-brand" href="#">DEVDAY_</a>-->
+             <img src="/static/img/logo.gif" width="200px"/>
+
+                <!--<button id="new_sketch" class="btn navbar-btn navbar-right"><a href="/">New Sketch</a></button>-->
+
+        </div>
+    </div>
+    <div id="container_bottom" class="row">
+        <div class="col-sm-12 col-md-12">
+            <table id="status" class="col-sm-6">
+                <thead>
+                <tr>
+                    <th class="col-sm-4">Name</th>
+                    <th class="col-sm-4">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    function updateDashboard() {
+        $.get('/api/dashboard', function(data) {
+            $('table#status>tbody').children().remove();
+            for(i in data){
+                $('table#status>tbody').append($("<tr><td>" + data[i]["name"] + "</td>" +
+                  "<td>" + data[i]["status"] + "</td>" +
+                 "</tr>"));
+            }
+            setTimeout(updateDashboard, 1000);
+        });
+    }
+    updateDashboard();
+</script>
+</body>
+</html>

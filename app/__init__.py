@@ -6,6 +6,6 @@ app.debug = True
 
 # connect to local database on default host and port
 client = MongoClient('localhost',27017)
-db = client['gistbender']
+db = client['devday']
 
 from app.controllers import *

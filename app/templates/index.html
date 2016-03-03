@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head>
-<title>Gist</title>
+<title>Play with Genuino</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
@@ -11,40 +11,35 @@
 <div id="wrapper" class="container">
     <div class="navbar navbar-fixed-top navbar-default">
         <div class="container">
-            <a class="navbar-brand" href="#">gistbender</a>
-                <button id="new_sketch" class="btn navbar-btn navbar-right"><a href="/">New Sketch</a></button>
+            <!--<a class="navbar-brand" href="#">DEVDAY_</a>-->
+             <img src="/static/img/logo.gif" width="200px"/>
+
+                <!--<button id="new_sketch" class="btn navbar-btn navbar-right"><a href="/">New Sketch</a></button>-->
+
         </div>
     </div>
     <div id="container_top" class="row">
         <div class="col-sm-12 col-md-12">
-            <div id="sketch_description_panel" class="row">
-                {% if description %}
-                <input id="sketch_description" type="text" placeholder="{{ description }}" class="form-control">
-                {% else %}
-                <input id="sketch_description" type="text" placeholder="Full Name" class="form-control">
-                {% endif %}
+            <div id="name_panel" class="row">
+                <div class="col-sm-4">
+                    <input id="name" type="text" placeholder="Full Name" value="{{name}}" class="form-control">
+                </div>
+                <div class="col-sm-4">
+                    <input id="email" type="text" placeholder="Email" value="{{email}}" class="form-control">
+                </div>
+                <div class="col-sm-4">
+                    <button class="btn pull-right" id="run_sketch">
+                            <i class="glyphicon glyphicon-send"></i> Run Sketch
+                    </button>
+                </div>
             </div>
 
-            <div id="sketch_filename_panel" class="row">
-                {% if filename %}
-                <input id="sketch_filename" type="text" placeholder="{{ filename }}" class="form-control">
-                {% else %}
-                <input id="sketch_filename" type="text" placeholder="Email" class="form-control">
-                {% endif %}
-            </div>
         </div>
     </div>
     <div id="container_bottom" class="row">
         <div class="col-sm-12 col-md-12">
             <div class="row">
-                <div class="col-sm-3 col-md-3" id="controls">
-                    <ul class="nav nav-sidebar">
-                        <li><button class="btn btn-success" id="share_sketch">
-                            <i class="glyphicon glyphicon-send"></i> Share Sketch
-                        </button></li>
-                        <li id="generated_url"></li>
-                    </ul>
-                </div>
+
                 <div class="col-sm-9 col-md-9">
                     <div class="row">
                         {% if code %}
@@ -74,20 +69,17 @@ void loop() {
                                     <i class="icon-keyboard"></i>
                                 </a>
                             </span>
-                            <span id="compile_output_close">
-                                <button id="compiler_output_close_btn" type="button" class="close">x</button>
-                            </span>
-                            <span id="sketch_info">
-                                <div id="lines">Number of lines: <span id="line_count">0</span></div>
-                                <div id="sketch_size">Sketch size: <span id="sketch_size_number">0</span> bytes</div>
-                            </span>
-                            <pre id="compile_output"></pre>
-                            <div id="serial_monitor">
-                                <div id="cb_cf_serial_monitor"></div>
-                                <div id="cb_cf_operation_output"></div>
-                            </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="col-sm-3 col-md-3" id="controls">
+                    <ul class="nav nav-sidebar">
+                        <!--<li><button class="btn btn-success" id="share_sketch1">-->
+                            <!--<i class="glyphicon glyphicon-send"></i> Share Sketch-->
+                        <!--</button></li>-->
+                        <li id="generated_url"></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -117,12 +109,23 @@ void loop() {
         });
 
         // creating a new sketch url
-        $('#share_sketch').click(function(){
-
+        $('#run_sketch').click(function(){
+            var valid = true;
+            if ($('#name').val().trim().length==0) {
+                $('#name').addClass('error');
+                valid = false;
+            }
+            if ($('#email').val().trim().length==0) {
+                $('#email').addClass('error');
+                valid = false;
+            }
+            if (!valid) return true;
+            $('#name').removeClass('error');
+            $('#email').removeClass('error');
             // add sketch to database
             $.post('/api/sketches', {
-                filename: $('#sketch_filename').val(),
-                description: $('#sketch_description').val(),
+                name: $('#name').val(),
+                email: $('#email').val(),
                 code: editor.getSession().getValue()
 
             // retrieve sketch url postfix
