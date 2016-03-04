@@ -19,8 +19,8 @@
         </div>
     </div>
     <div id="container_bottom" class="row">
-        <div class="col-sm-12 col-md-12">
-            <table id="status" class="col-sm-6">
+        <div class="col-sm-12 col-md-12" style="">
+            <table id="status" class="col-sm-6 table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th class="col-sm-4">Name</th>
@@ -42,14 +42,23 @@
         $.get('/api/dashboard', function(data) {
             $('table#status>tbody').children().remove();
             for(i in data){
+                var successClass = "";
+                if(data[i]["status"] === "success" || data[i]["status"] === "Success"){
+                    successClass = 'blinker';
+                } else {
+                    successClass = '';
+                }
                 $('table#status>tbody').append($("<tr><td>" + data[i]["name"] + "</td>" +
-                  "<td>" + data[i]["status"] + "</td>" +
+
+                    "<td class=" + successClass + ">" + data[i]["status"] + "</td>" +
+
                  "</tr>"));
             }
             setTimeout(updateDashboard, 1000);
         });
     }
     updateDashboard();
+
 </script>
 </body>
 </html>
